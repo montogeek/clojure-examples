@@ -33,5 +33,5 @@
              ;; Compilation Options
              :compiler
              {:output-to "dev-resources/public/js/calculator.js"
-              :optimizations :advanced
+              :optimizations :none
               :pretty-print false}}}})

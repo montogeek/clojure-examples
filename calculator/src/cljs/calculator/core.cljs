@@ -7,29 +7,25 @@
 (ns calculator.core
   (:require [reagent.core :as reagent :refer [atom]]))
 
-(def total (atom 0))
+(def app-state (atom {:num1 0
+                      :num2 0}))
 
-(defn foo [greeting]
-  (if greeting
-    (str greeting "ClojureScript!")
-    (str "Hello, ClojureScript!")))
+(defn set-value [number value]
+  (swap! app-state assoc number value))
 
-(defn textbox [name]
-  [:div
-  	[:input {:name name
-    	       :type "text"}]])
+(set-value :num1 1)
 
-(defn button []
-  [:input {:type "submit"
-           :value "Plus"
-           :on-click #()}])
+(defn for-list []
+  [:ul
+    (for [day (range 31)]
+      [:li day])])
 
-(defn box []
-  [:div "Enter numbers: "
-   [textbox "num1"]
-   [textbox "num2"]
-   [button]
-   [:b "Total is: " @total ]])
+(defn init []
+  [:div "Hola"
+   [:h1 (get-in @app-state [:num1])]
+   [:button {:on-click #(set-value :num1 10) } "Change me to 10!"
+    ]
+   [for-list]
+   ])
 
-; (.write js/document [textbox "hi"])
-(reagent/render-component [box] (.getElementById js/document "app"))
+(reagent/render-component [init] (.getElementById js/document "app"))
